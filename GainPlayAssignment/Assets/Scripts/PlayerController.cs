@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] Rigidbody body;
-    [SerializeField] float moveSpeed;
+    [SerializeField] float moveForce;
+    [SerializeField] float maxSpeed;
 
     float inputX, inputY;
 
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        body.AddForce(new Vector3(inputX, 0, inputY) * moveSpeed);
+        body.AddForce(new Vector3(inputX, 0, inputY) * moveForce);
+        body.velocity = Vector3.ClampMagnitude(body.velocity, maxSpeed);
     }
 }
