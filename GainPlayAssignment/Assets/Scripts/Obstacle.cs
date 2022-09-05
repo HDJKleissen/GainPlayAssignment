@@ -6,11 +6,11 @@ public class Obstacle : MonoBehaviour
 {
     MeshRenderer meshRenderer;
     Rigidbody body;
-
+    public Collider ObstacleCollider { get; private set; }
+       
     [HideInInspector]
     public ObstacleInfo ObstacleInfo;
-
-    
+        
     // Start is called before the first frame update
     void Start()
     {
@@ -29,12 +29,13 @@ public class Obstacle : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnEnable()
     {
+        ObstacleManager.Instance.RegisterObstacle(this);
     }
-
-    private void OnCollisionExit(Collision collision)
+    private void OnDisable()
     {
+        ObstacleManager.Instance.DeregisterObstacle(this);
     }
 
     void OnValidate()
@@ -46,6 +47,10 @@ public class Obstacle : MonoBehaviour
         if (body == null)
         {
             body = GetComponent<Rigidbody>();
+        }
+        if (ObstacleCollider == null)
+        {
+            ObstacleCollider = GetComponent<Collider>();
         }
         if (ObstacleInfo != null)
         {

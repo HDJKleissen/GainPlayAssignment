@@ -10,19 +10,19 @@ public class FreezeYPosOverFloor : MonoBehaviour
 
     RigidbodyConstraints baseConstraints;
 
+    int layerMask;
+
     // Start is called before the first frame update
     void Start()
     {
+        layerMask = LayerMask.GetMask(Constants.FLOOR_LAYER_NAME);
         baseConstraints = body.constraints;
     }
 
     // Update is called once per frame
     void Update()
     {
-        int layerMask = LayerMask.GetMask(Constants.FLOOR_LAYER_NAME);
-
         bool aboveFloor = Physics.Raycast(transform.position, Vector3.down, floorDistance, layerMask);
-        Debug.Log(name + " " + aboveFloor);
         body.constraints = aboveFloor ? baseConstraints | RigidbodyConstraints.FreezePositionY : RigidbodyConstraints.None;
     }
 

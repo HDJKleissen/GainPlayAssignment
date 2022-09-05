@@ -41,7 +41,6 @@ public class ObstacleEditor : Editor
                 }
             }
 
-
             if (allTypesEqual)
             {
                 selectedType = (ObstacleType)EditorGUILayout.EnumPopup("Obstacle Type", compareType);
