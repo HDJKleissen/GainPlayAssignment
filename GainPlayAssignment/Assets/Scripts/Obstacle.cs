@@ -10,17 +10,28 @@ public class Obstacle : MonoBehaviour
        
     [HideInInspector]
     public ObstacleInfo ObstacleInfo;
-        
+
     // Start is called before the first frame update
     void Start()
     {
         SetupObstacle(ObstacleInfo.ObstacleType);
+        ObstacleManager.Instance.RegisterObstacle(this);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag(Constants.PLAYER_TAG))
         {
+            if(ObstacleInfo.ObstacleType == ObstacleType.Negative)
+            {
+                Vector3 locationDiff = collision.transform.position - transform.position;
+                locationDiff.y = 1;
+                locationDiff.Normalize();
+
+                GameObject deadCopy = collision.gameObject.GetComponent<PlayerController>().CreateDeadCopy();
+
+                deadCopy.GetComponent<Rigidbody>().AddForce(locationDiff.normalized * 50, ForceMode.Impulse);
+            }
             body.isKinematic = !ObstacleInfo.PushableByPlayer;
         }
         else if (collision.gameObject.CompareTag(Constants.OBSTACLE_TAG))
@@ -29,11 +40,7 @@ public class Obstacle : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        ObstacleManager.Instance.RegisterObstacle(this);
-    }
-    private void OnDisable()
+    private void OnDestroy()
     {
         ObstacleManager.Instance.DeregisterObstacle(this);
     }
@@ -63,7 +70,6 @@ public class Obstacle : MonoBehaviour
         ObstacleInfo = ResourceLoader.GetResource<ObstacleInfo>(newType.ToString());
         meshRenderer.material = ObstacleInfo.ColorMaterial;
         tag = Constants.OBSTACLE_TAG;
-        body.isKinematic = true;
     }
 }
 

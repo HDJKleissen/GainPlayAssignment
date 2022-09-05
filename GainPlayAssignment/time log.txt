@@ -9,3 +9,5 @@ MONDAY
 20:45 - 21:15 more physics tweaks
 21:15 - 21:25 cinemachine setup
 21:25 - 22:15 score setup (pickup, tracking, UI)
+22:15 - 23:00 powerup setup
+23:00 - 23:45 player death 

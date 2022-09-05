@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] Rigidbody body;
+    [SerializeField] MeshRenderer meshRenderer;
     [SerializeField] float moveForce;
     [SerializeField] float maxSpeed;
 
@@ -35,5 +36,15 @@ public class PlayerController : MonoBehaviour
     {
         body.AddForce(new Vector3(inputX, 0, inputY) * moveForce);
         body.velocity = Vector3.ClampMagnitude(body.velocity, maxSpeed);
+    }
+
+    public GameObject CreateDeadCopy()
+    {
+        GameObject deadCopy = Instantiate(gameObject, transform.position, transform.rotation);
+        meshRenderer.enabled = false;
+        body.isKinematic = true;
+        enabled = false;
+
+        return deadCopy;
     }
 }

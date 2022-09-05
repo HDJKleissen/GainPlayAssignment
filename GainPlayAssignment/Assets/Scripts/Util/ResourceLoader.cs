@@ -28,7 +28,7 @@ static class ResourceLoader
         return loadedResources[fullPath] as T;
     }
 
-    static bool LoadResource<T>(string name) where T : UnityEngine.Object
+    public static bool LoadResource<T>(string name) where T : UnityEngine.Object
     {
         string fullPath = GetFullPath<T>(name);
 
