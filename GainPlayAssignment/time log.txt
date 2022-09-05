@@ -5,3 +5,7 @@ FRIDAY
 2:30 - 3:30 Troubleshooting selective pushing
 SATURDAY
 1:30 - 2:00 physics tweaks
+MONDAY
+20:45 - 21:15 more physics tweaks
+21:15 - 21:25 cinemachine setup
+21:25 - 22:15 score setup (pickup, tracking, UI)
