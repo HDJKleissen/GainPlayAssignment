@@ -4,16 +4,40 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-
-    [SerializeField]
     MeshRenderer meshRenderer;
-    [SerializeField]
     Rigidbody body;
 
     [HideInInspector]
     public ObstacleInfo ObstacleInfo;
 
-    void Awake()
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        SetupObstacle(ObstacleInfo.ObstacleType);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag(Constants.PLAYER_TAG))
+        {
+            body.isKinematic = !ObstacleInfo.PushableByPlayer;
+        }
+        else if (collision.gameObject.CompareTag(Constants.OBSTACLE_TAG))
+        {
+            body.isKinematic = !ObstacleInfo.PushableByObstacles;
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+    }
+
+    void OnValidate()
     {
         if (meshRenderer == null)
         {
@@ -23,39 +47,6 @@ public class Obstacle : MonoBehaviour
         {
             body = GetComponent<Rigidbody>();
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        SetupObstacle(ObstacleInfo.ObstacleType);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (body.mass != 100 && collision.gameObject.CompareTag("Player") && !ObstacleInfo.PushableByPlayer || collision.gameObject.CompareTag("Obstacle") && !ObstacleInfo.PushableByObstacles)
-        {
-            body.mass = 100;
-        }
-    }
-    private void OnCollisionStay(Collision collision)
-    {
-        if (body.mass != 0.2f && collision.gameObject.CompareTag("Player") && ObstacleInfo.PushableByPlayer || collision.gameObject.CompareTag("Obstacle") && ObstacleInfo.PushableByObstacles)
-        {
-            body.mass = 0.2f;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Obstacle"))
-        {
-            body.mass = 100;
-        }
-    }
-    
-    void OnValidate()
-    {
         if (ObstacleInfo != null)
         {
             SetupObstacle(ObstacleInfo.ObstacleType);
@@ -66,7 +57,8 @@ public class Obstacle : MonoBehaviour
     {
         ObstacleInfo = ResourceLoader.GetResource<ObstacleInfo>(newType.ToString());
         meshRenderer.material = ObstacleInfo.ColorMaterial;
-        body.mass = 100;
+        tag = Constants.OBSTACLE_TAG;
+        body.isKinematic = true;
     }
 }
 
