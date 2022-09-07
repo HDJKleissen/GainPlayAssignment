@@ -13,9 +13,13 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        if(body == null)
+        if (body == null)
         {
             body = GetComponent<Rigidbody>();
+        }
+        if (meshRenderer == null)
+        {
+            meshRenderer = GetComponent<MeshRenderer>();
         }
     }
 
@@ -40,10 +44,10 @@ public class PlayerController : MonoBehaviour
 
     public GameObject CreateDeadCopy()
     {
+        enabled = false;
         GameObject deadCopy = Instantiate(gameObject, transform.position, transform.rotation);
         meshRenderer.enabled = false;
         body.isKinematic = true;
-        enabled = false;
 
         return deadCopy;
     }

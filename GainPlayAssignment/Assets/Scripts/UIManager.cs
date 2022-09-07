@@ -6,10 +6,12 @@ using TMPro;
 public class UIManager : UnitySingleton<UIManager>
 {
     [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] GameObject pauseMenu;
 
     private void OnEnable()
     {
         GameManager.OnScoreChange += UpdateScoreText;
+        GameManager.OnPausedChange += TogglePauseMenu;
     }
     private void OnDisable()
     {
@@ -19,5 +21,10 @@ public class UIManager : UnitySingleton<UIManager>
     void UpdateScoreText(int score)
     {
         scoreText.SetText("Score: " + score);
+    }
+
+    void TogglePauseMenu(bool paused)
+    {
+        pauseMenu.SetActive(paused);
     }
 }

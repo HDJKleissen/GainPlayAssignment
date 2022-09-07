@@ -11,3 +11,5 @@ MONDAY
 21:25 - 22:15 score setup (pickup, tracking, UI)
 22:15 - 23:00 powerup setup
 23:00 - 23:45 player death 
+WEDNESDAY
+22:30 - 23:40 pausing
