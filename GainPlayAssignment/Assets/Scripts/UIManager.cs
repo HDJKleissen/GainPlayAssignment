@@ -7,15 +7,19 @@ public class UIManager : UnitySingleton<UIManager>
 {
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] GameObject pauseMenu;
+    [SerializeField] GameObject gameOverMenu;
 
     private void OnEnable()
     {
         GameManager.OnScoreChange += UpdateScoreText;
         GameManager.OnPausedChange += TogglePauseMenu;
+        PlayerController.OnPlayerDeath += OpenGameOverMenu;
     }
     private void OnDisable()
     {
         GameManager.OnScoreChange -= UpdateScoreText;
+        GameManager.OnPausedChange -= TogglePauseMenu;
+        PlayerController.OnPlayerDeath -= OpenGameOverMenu;
     }
 
     void UpdateScoreText(int score)
@@ -26,5 +30,10 @@ public class UIManager : UnitySingleton<UIManager>
     void TogglePauseMenu(bool paused)
     {
         pauseMenu.SetActive(paused);
+    }
+
+    void OpenGameOverMenu()
+    {
+        StartCoroutine(CoroutineHelper.DelaySeconds(() => gameOverMenu.SetActive(true), 1));
     }
 }

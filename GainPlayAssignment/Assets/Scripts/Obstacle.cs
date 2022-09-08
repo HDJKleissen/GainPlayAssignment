@@ -25,12 +25,12 @@ public class Obstacle : MonoBehaviour
             if(ObstacleInfo.ObstacleType == ObstacleType.Negative)
             {
                 Vector3 locationDiff = collision.transform.position - transform.position;
+                locationDiff.y = 0;
+                locationDiff.Normalize();
                 locationDiff.y = 1;
                 locationDiff.Normalize();
 
-                GameObject deadCopy = collision.gameObject.GetComponent<PlayerController>().CreateDeadCopy();
-
-                deadCopy.GetComponent<Rigidbody>().AddForce(locationDiff.normalized * 50, ForceMode.Impulse);
+                collision.gameObject.GetComponent<PlayerController>().Kill(locationDiff.normalized * 30);                
             }
             body.isKinematic = !ObstacleInfo.PushableByPlayer;
         }
