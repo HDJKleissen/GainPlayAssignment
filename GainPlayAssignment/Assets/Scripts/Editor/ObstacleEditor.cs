@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(Obstacle)), CanEditMultipleObjects]
+//[CustomEditor(typeof(Obstacle)), CanEditMultipleObjects]
 public class ObstacleEditor : Editor
 {
     //ObstacleType selectedType;

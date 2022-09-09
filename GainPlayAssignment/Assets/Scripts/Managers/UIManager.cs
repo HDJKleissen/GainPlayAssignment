@@ -6,6 +6,7 @@ using TMPro;
 
 public class UIManager : UnitySingleton<UIManager>
 {
+    [SerializeField] TextMeshProUGUI difficultyText;
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] GameObject pauseMenu;
@@ -13,6 +14,7 @@ public class UIManager : UnitySingleton<UIManager>
 
     private void OnEnable()
     {
+        GameManager.OnDifficultyChange += UpdateDifficultyText;
         GameManager.OnScoreChange += UpdateScoreText;
         GameManager.OnTimerChange += UpdateTimer;
         GameManager.OnPausedChange += TogglePauseMenu;
@@ -20,10 +22,16 @@ public class UIManager : UnitySingleton<UIManager>
     }
     private void OnDisable()
     {
+        GameManager.OnDifficultyChange -= UpdateDifficultyText;
         GameManager.OnScoreChange -= UpdateScoreText;
         GameManager.OnTimerChange -= UpdateTimer;
         GameManager.OnPausedChange -= TogglePauseMenu;
         PlayerController.OnPlayerDeath -= OpenGameOverMenu;
+    }
+
+    void UpdateDifficultyText(int difficulty)
+    {
+        difficultyText.SetText("Difficulty: " + difficulty);
     }
 
     void UpdateScoreText(int score)

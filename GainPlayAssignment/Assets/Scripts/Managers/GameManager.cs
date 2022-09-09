@@ -15,28 +15,28 @@ public class GameManager : UnitySingleton<GameManager>
 
     float timeRemaining, timePlayed;
     int currentScore, difficulty;
-    string currentLevelName;
-    bool gamePaused;
+    bool gamePaused, timerRunning;
 
     void Start()
     {
+        timerRunning = true;
         timeRemaining = timePerCheckpoint;
         timePlayed = 0;
+        difficulty = 0;
     }
 
     void OnEnable()
     {
-        Checkpoint.OnCheckpointReached += IncreaseTimer;
+        Checkpoint.OnCheckpointReached += CheckpointReached;
     }
     void OnDisable()
     {
-        Checkpoint.OnCheckpointReached -= IncreaseTimer;
+        Checkpoint.OnCheckpointReached -= CheckpointReached;
     }
 
     // Update is called once per frame
     void Update()
-    {
-        
+    {        
         if (Input.GetButtonDown("Pause"))
         {
             SetPaused(!gamePaused);
@@ -67,15 +67,13 @@ public class GameManager : UnitySingleton<GameManager>
     }
 
 
-    void IncreaseTimer()
+    void CheckpointReached()
     {
         timeRemaining += timePerCheckpoint;
         OnTimerChange?.Invoke(timeRemaining);
-    }
 
-    void LoadLevel(string levelName)
-    {
-
+        difficulty++;
+        OnDifficultyChange?.Invoke(difficulty);
     }
 
     public void ResetLevel()

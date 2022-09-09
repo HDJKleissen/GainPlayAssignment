@@ -8,13 +8,12 @@ public class Obstacle : MonoBehaviour
     Rigidbody body;
     public Collider ObstacleCollider { get; private set; }
        
-    [HideInInspector]
+    //[HideInInspector]
     public ObstacleInfo ObstacleInfo;
 
     // Start is called before the first frame update
     void Start()
     {
-        SetupObstacle(ObstacleInfo.ObstacleType);
         ObstacleManager.Instance.RegisterObstacle(this);
     }
 
@@ -28,7 +27,7 @@ public class Obstacle : MonoBehaviour
                 locationDiff.y = 0;
                 locationDiff.Normalize();
                 locationDiff.y = 1;
-                locationDiff.Normalize();
+                //locationDiff.Normalize();
 
                 collision.gameObject.GetComponent<PlayerController>().Kill(locationDiff.normalized * 30);                
             }

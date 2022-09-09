@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
 
         StartCoroutine(CoroutineHelper.DelayOneFixedFrame(() => deadCopyCollider.enabled = true));
 
-       // deadCopy.GetComponent<Rigidbody>().AddForce(deathImpulse, ForceMode.Impulse);
+        deadCopy.GetComponent<Rigidbody>().AddForce(deathImpulse, ForceMode.Impulse);
 
         meshRenderer.enabled = false;
         body.isKinematic = true;
