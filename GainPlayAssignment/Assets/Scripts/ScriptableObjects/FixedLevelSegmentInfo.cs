@@ -6,4 +6,5 @@ using UnityEngine;
 public class FixedLevelSegmentInfo : LevelSegmentInfo
 {
     public GameObject SegmentPrefab;
+    public bool isTutorial;
 }

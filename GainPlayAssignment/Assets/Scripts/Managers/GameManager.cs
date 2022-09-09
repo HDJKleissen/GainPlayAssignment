@@ -24,7 +24,7 @@ public class GameManager : UnitySingleton<GameManager>
     void Start()
     {
         timerRunning = true;
-        timeRemaining = timePerCheckpoint;
+        timeRemaining = timePerCheckpoint * 2;
         timePlayed = 0;
         Difficulty = 0;
     }

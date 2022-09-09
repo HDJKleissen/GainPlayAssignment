@@ -1,19 +1,16 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Checkpoint : MonoBehaviour
+public class FinishLine : MonoBehaviour
 {
-    public static event Action OnCheckpointReached;
-
     bool wasReached = false;
-    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(Constants.PLAYER_TAG) && !wasReached)
         {
             wasReached = true;
-            OnCheckpointReached?.Invoke();
+            other.GetComponent<PlayerController>().Kill();
         }
     }
 }

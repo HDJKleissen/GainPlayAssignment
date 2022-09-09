@@ -9,8 +9,6 @@ using UnityEditor;
 //[CustomEditor(typeof(Obstacle)), CanEditMultipleObjects]
 public class ObstacleEditor : Editor
 {
-    //ObstacleType selectedType;
-
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();

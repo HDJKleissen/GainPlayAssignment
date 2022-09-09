@@ -41,6 +41,11 @@ public class PlayerController : MonoBehaviour
     {
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
+
+        if(transform.position.y < -1)
+        {
+            Kill();
+        }
     }
 
     void FixedUpdate()
@@ -51,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
     public void Kill()
     {
-        Kill(Vector3.zero);
+        Kill(body.velocity);
     }
 
     public void Kill(Vector3 deathImpulse)

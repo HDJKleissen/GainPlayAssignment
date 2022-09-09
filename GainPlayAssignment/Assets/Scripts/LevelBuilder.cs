@@ -6,10 +6,11 @@ public class LevelBuilder : MonoBehaviour
 {
     public int SegmentAmount = 10;
     public GameObject FloorSegmentPrefab;
-    public GameObject CheckpointPrefab; 
+    public GameObject CheckpointPrefab;
+    public GameObject FinishLinePrefab;
 
     List<FixedLevelSegmentInfo> fixedLevelSegments = new List<FixedLevelSegmentInfo>();
-    List<RandomizedLevelSegmentInfo> randomizedLevelSegments= new List<RandomizedLevelSegmentInfo>();
+    List<RandomizedLevelSegmentInfo> randomizedLevelSegments = new List<RandomizedLevelSegmentInfo>();
 
     int highestDifficulty = 0;
 
@@ -17,16 +18,41 @@ public class LevelBuilder : MonoBehaviour
     void Start()
     {
         GetAllLevelSegments();
-        Debug.Log(fixedLevelSegments.Count);
-        GameObject levelParent = new GameObject("Level Parent");
 
-        for(int i = 0; i < SegmentAmount; i++)
+        GameObject levelParent = new GameObject("Level Parent");
+        float furthestFloorZ = 0;
+
+        // Spawn "Tutorial"
+        for(int i = 0; i <= highestDifficulty; i++)
         {
             GameObject floor = Instantiate(FloorSegmentPrefab, new Vector3(0,0, (i+1)*10), Quaternion.identity, levelParent.transform);
-            FixedLevelSegmentInfo segmentToSpawn = SelectFixedLevelSegment(i, i > highestDifficulty);
+            FixedLevelSegmentInfo segmentToSpawn = SelectFixedLevelSegment(i);
             Instantiate(segmentToSpawn.SegmentPrefab, floor.transform);
-            Instantiate(CheckpointPrefab, new Vector3(0, 0, (i + 1) * 10 + 5), Quaternion.identity, levelParent.transform);
+
+            furthestFloorZ = floor.transform.position.z;
         }
+
+        // Spawn randomly after that
+        for (int i = 0; i < SegmentAmount; i++)
+        {
+            GameObject floor = Instantiate(FloorSegmentPrefab, new Vector3(0, 0, (highestDifficulty + i + 2) * 10), Quaternion.identity, levelParent.transform);
+            FixedLevelSegmentInfo segmentToSpawn = SelectFixedLevelSegment(highestDifficulty, true);
+            Instantiate(segmentToSpawn.SegmentPrefab, floor.transform);
+
+            furthestFloorZ = floor.transform.position.z;
+        }
+
+        float checkPointZ = 15;
+        int difficulty = 0;
+        while(checkPointZ < furthestFloorZ)
+        {
+            Instantiate(CheckpointPrefab, new Vector3(0, 0, checkPointZ), Quaternion.identity, levelParent.transform);
+            checkPointZ += 10 + difficulty;
+            difficulty++;
+        }
+
+        Instantiate(FinishLinePrefab, new Vector3(0, 0, furthestFloorZ + 5), Quaternion.identity, levelParent.transform);
+
     }
 
     // Update is called once per frame
@@ -35,13 +61,13 @@ public class LevelBuilder : MonoBehaviour
         
     }
 
-    FixedLevelSegmentInfo SelectFixedLevelSegment(int difficulty, bool includeLower = false)
+    FixedLevelSegmentInfo SelectFixedLevelSegment(int difficulty, bool tutorialSegment = false)
     {
         List<FixedLevelSegmentInfo> eligibleSegments = new List<FixedLevelSegmentInfo>();
 
-        foreach(FixedLevelSegmentInfo info in fixedLevelSegments)
+        foreach (FixedLevelSegmentInfo info in fixedLevelSegments)
         {
-            if (includeLower)
+            if (tutorialSegment)
             {
                 if (info.Difficulty <= difficulty)
                 {
@@ -50,7 +76,7 @@ public class LevelBuilder : MonoBehaviour
             }
             else
             {
-                if(info.Difficulty == difficulty)
+                if (info.Difficulty == difficulty)
                 {
                     eligibleSegments.Add(info);
                 }

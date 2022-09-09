@@ -1077,6 +1077,7 @@ MonoBehaviour:
   SegmentAmount: 10
   FloorSegmentPrefab: {fileID: 5670642580790463844, guid: 9dfe4f55e37c73945ba4ef09717bcb2a, type: 3}
   CheckpointPrefab: {fileID: 3477636215766110809, guid: 88685f3304c2f654eb1afab50df4a79a, type: 3}
+  FinishLinePrefab: {fileID: 0}
 --- !u!1 &2144504981
 GameObject:
   m_ObjectHideFlags: 0

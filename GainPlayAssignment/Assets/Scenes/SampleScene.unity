@@ -564,9 +564,13 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1704819140, guid: d5335b36de0869f4e8c84e125ed10256, type: 3}
+      propertyPath: FinishLinePrefab
+      value: 
+      objectReference: {fileID: 3477636215766110809, guid: 5a1e55f826b9f764bb339c611e2d7b70, type: 3}
     - target: {fileID: 759609647410568575, guid: d5335b36de0869f4e8c84e125ed10256, type: 3}
       propertyPath: timePerCheckpoint
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 759609647689429596, guid: d5335b36de0869f4e8c84e125ed10256, type: 3}
       propertyPath: m_RootOrder
