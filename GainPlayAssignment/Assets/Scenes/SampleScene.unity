@@ -380,7 +380,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.4847685, y: 0, z: 0, w: 0.8746425}
-  m_LocalPosition: {x: -0.04, y: 8.66, z: -9.037001}
+  m_LocalPosition: {x: -0.04, y: 8.66, z: -1.4100001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -484,7 +484,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1458562960}
   m_LocalRotation: {x: 0.4847685, y: 0, z: 0, w: 0.8746425}
-  m_LocalPosition: {x: -0.04, y: 8.66, z: -9.037001}
+  m_LocalPosition: {x: -0.04, y: 8.66, z: -1.4100001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -523,7 +523,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 44766559774757286, guid: 7b13cbf227dbd1e45bd59b2175ee73ef, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.037
+      value: 3.59
       objectReference: {fileID: 0}
     - target: {fileID: 44766559774757286, guid: 7b13cbf227dbd1e45bd59b2175ee73ef, type: 3}
       propertyPath: m_LocalRotation.w
@@ -564,6 +564,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 759609647410568575, guid: d5335b36de0869f4e8c84e125ed10256, type: 3}
+      propertyPath: timePerCheckpoint
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 759609647689429596, guid: d5335b36de0869f4e8c84e125ed10256, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -637,7 +641,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5670642580790463843, guid: 9dfe4f55e37c73945ba4ef09717bcb2a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5670642580790463843, guid: 9dfe4f55e37c73945ba4ef09717bcb2a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -669,7 +673,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5670642580790463844, guid: 9dfe4f55e37c73945ba4ef09717bcb2a, type: 3}
       propertyPath: m_Name
-      value: LevelSegment
+      value: StartFloorSegment
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670642582644932024, guid: 9dfe4f55e37c73945ba4ef09717bcb2a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

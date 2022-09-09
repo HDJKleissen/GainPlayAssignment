@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;  
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,8 +15,10 @@ public class GameManager : UnitySingleton<GameManager>
 
     [SerializeField] float timePerCheckpoint;
 
+    public int Difficulty { get; private set; }
+
     float timeRemaining, timePlayed;
-    int currentScore, difficulty;
+    int currentScore;
     bool gamePaused, timerRunning;
 
     void Start()
@@ -22,34 +26,40 @@ public class GameManager : UnitySingleton<GameManager>
         timerRunning = true;
         timeRemaining = timePerCheckpoint;
         timePlayed = 0;
-        difficulty = 0;
+        Difficulty = 0;
     }
 
     void OnEnable()
     {
         Checkpoint.OnCheckpointReached += CheckpointReached;
+        PlayerController.OnPlayerDeath += EndGame; 
     }
     void OnDisable()
     {
         Checkpoint.OnCheckpointReached -= CheckpointReached;
+        PlayerController.OnPlayerDeath -= EndGame;
     }
 
     // Update is called once per frame
     void Update()
-    {        
+    {
         if (Input.GetButtonDown("Pause"))
         {
             SetPaused(!gamePaused);
         }
 
-        if (timeRemaining > 0)
+        if (timerRunning)
         {
-            timeRemaining -= Time.deltaTime;
-            OnTimerChange?.Invoke(timeRemaining);
-        }
-        else
-        {
-            OnTimerEnd?.Invoke();
+            timePlayed += Time.deltaTime;
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                OnTimerChange?.Invoke(timeRemaining);
+            }
+            else
+            {
+                OnTimerEnd?.Invoke();
+            }
         }
     }
 
@@ -72,14 +82,35 @@ public class GameManager : UnitySingleton<GameManager>
         timeRemaining += timePerCheckpoint;
         OnTimerChange?.Invoke(timeRemaining);
 
-        difficulty++;
-        OnDifficultyChange?.Invoke(difficulty);
+        Difficulty++;
+        OnDifficultyChange?.Invoke(Difficulty);
+    }
+
+    void EndGame()
+    {
+        timerRunning = false;
+        CreateLevelOverviewJSON();
     }
 
     public void ResetLevel()
     {
         SetPaused(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    void CreateLevelOverviewJSON()
+    {
+        GameInfo info = new GameInfo();
+        info.timePlayed = timePlayed;
+        info.timeJsonMade = DateTime.Now.Ticks;
+        info.gameName = "blocky-pushy";
+        info.score = currentScore;
+
+        string jsonOutput = JsonConvert.SerializeObject(info);
+
+        string destination = Application.persistentDataPath + "/" + info.gameName + "-" + info.timeJsonMade + ".json";
+        Debug.Log("writing to " + destination);
+        File.WriteAllText(destination, jsonOutput);
     }
 
     public void QuitGame()
@@ -93,4 +124,12 @@ public class GameManager : UnitySingleton<GameManager>
 #endif
 
     }
+}
+
+struct GameInfo
+{
+    public float timePlayed;
+    public long timeJsonMade;
+    public string gameName;
+    public int score;
 }

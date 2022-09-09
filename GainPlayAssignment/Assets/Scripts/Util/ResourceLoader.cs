@@ -5,11 +5,22 @@ using UnityEngine;
 static class ResourceLoader
 {
     static Dictionary<string, UnityEngine.Object> loadedResources = new Dictionary<string, UnityEngine.Object>();
+    static Dictionary<string, UnityEngine.Object[]> loadedResourceCollections = new Dictionary<string, UnityEngine.Object[]>();
 
     public static T GetResource<T>(string name, bool canBeNull = false) where T : UnityEngine.Object
     {
         string fullPath = GetFullPath<T>(name);
 
+        string collectionPath = GetFullPath<T>("");
+
+        if (loadedResourceCollections.ContainsKey(collectionPath))
+        {
+            int resourceIndexInLoadedCollection = Array.FindIndex(loadedResourceCollections[collectionPath], x => x.name == name);
+            if (resourceIndexInLoadedCollection != -1)
+            {
+                loadedResources[fullPath] = loadedResourceCollections[collectionPath][resourceIndexInLoadedCollection];
+            }
+        }
         if (!loadedResources.ContainsKey(fullPath))
         {
             bool success = LoadResource<T>(name);
@@ -44,6 +55,20 @@ static class ResourceLoader
             return false;
         }
     }
+    public static T[] GetAll<T>() where T : UnityEngine.Object
+    {
+        string fullPath = GetFullPath<T>("");
+
+        if (!loadedResourceCollections.ContainsKey(fullPath))
+        {
+            Debug.Log(fullPath);
+            loadedResourceCollections[fullPath] = Resources.LoadAll<T>(fullPath);
+
+        }
+
+        return loadedResourceCollections[fullPath] as T[];
+    }
+
 
 
     static string GetFullPath<T>(string name) where T : UnityEngine.Object

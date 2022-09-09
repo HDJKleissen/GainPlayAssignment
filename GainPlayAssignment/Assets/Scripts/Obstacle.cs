@@ -14,6 +14,7 @@ public class Obstacle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        FindComponents();
         ObstacleManager.Instance.RegisterObstacle(this);
     }
 
@@ -27,7 +28,6 @@ public class Obstacle : MonoBehaviour
                 locationDiff.y = 0;
                 locationDiff.Normalize();
                 locationDiff.y = 1;
-                //locationDiff.Normalize();
 
                 collision.gameObject.GetComponent<PlayerController>().Kill(locationDiff.normalized * 30);                
             }
@@ -46,6 +46,18 @@ public class Obstacle : MonoBehaviour
 
     void OnValidate()
     {
+        FindComponents();
+    }
+
+    public void SetupObstacle(ObstacleType newType)
+    {
+        ObstacleInfo = ResourceLoader.GetResource<ObstacleInfo>(newType.ToString());
+        meshRenderer.material = ObstacleInfo.ColorMaterial;
+        tag = Constants.OBSTACLE_TAG;
+    }
+
+    void FindComponents()
+    {
         if (meshRenderer == null)
         {
             meshRenderer = GetComponent<MeshRenderer>();
@@ -62,13 +74,6 @@ public class Obstacle : MonoBehaviour
         {
             SetupObstacle(ObstacleInfo.ObstacleType);
         }
-    }
-
-    public void SetupObstacle(ObstacleType newType)
-    {
-        ObstacleInfo = ResourceLoader.GetResource<ObstacleInfo>(newType.ToString());
-        meshRenderer.material = ObstacleInfo.ColorMaterial;
-        tag = Constants.OBSTACLE_TAG;
     }
 }
 
