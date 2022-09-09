@@ -1,3 +1,25 @@
+Groups of obstacles are spawned randomly.
+The player needs to reach a goal area or checkpoint before a timer runs out and picks up points along the way. 
+The difficulty should slowly increase during the level.
+Please create about 30 seconds or longer of play with some puzzles using these ingrediënts to show off the functionality you created.
+If the player finishes the level they need to be prompted to play again. 
+
+Once the game is ended, the player dies, or the level is finished by the player, the gamecontroller must save a .json file
+that contains the following information:
+● The name of the game
+● The time played in seconds
+● The timecode of when the score file was generated
+● The score the player earned
+{
+"timePlayed": 83,
+"timeJsonMade": 1662035655,
+"gameName": "blocky-pushy",
+"score": 1337
+}
+Bonus:
+If you complete the exercise early, you can implement a way to add hand crafted chunks of
+obstacles to the game.
+
 FRIDAY
 22:30 - 23:30 Enviroment setup + Player
 23:30 - 1:00 Obstacle base
@@ -14,3 +36,6 @@ MONDAY
 WEDNESDAY
 22:30 - 23:40 pausing
 23:40 - 1:00 player death UI, level creation
+THURSDAY
+20:00 - 20:20 under floor death zone
+20:20 - 22:00 timer and checkpoint

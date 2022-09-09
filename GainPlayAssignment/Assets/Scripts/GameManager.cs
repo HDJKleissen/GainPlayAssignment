@@ -6,24 +6,50 @@ using UnityEngine.SceneManagement;
 public class GameManager : UnitySingleton<GameManager>
 {
     public static event Action<int> OnScoreChange;
+    public static event Action<float> OnTimerChange;
+    public static event Action OnTimerEnd;
     public static event Action<bool> OnPausedChange;
+    public static event Action<int> OnDifficultyChange;
 
-    int currentScore;
+    [SerializeField] float timePerCheckpoint;
+
+    float timeRemaining, timePlayed;
+    int currentScore, difficulty;
     string currentLevelName;
     bool gamePaused;
-    
-    // Start is called before the first frame update
+
     void Start()
     {
+        timeRemaining = timePerCheckpoint;
+        timePlayed = 0;
+    }
 
+    void OnEnable()
+    {
+        Checkpoint.OnCheckpointReached += IncreaseTimer;
+    }
+    void OnDisable()
+    {
+        Checkpoint.OnCheckpointReached -= IncreaseTimer;
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (Input.GetButtonDown("Pause"))
         {
             SetPaused(!gamePaused);
+        }
+
+        if (timeRemaining > 0)
+        {
+            timeRemaining -= Time.deltaTime;
+            OnTimerChange?.Invoke(timeRemaining);
+        }
+        else
+        {
+            OnTimerEnd?.Invoke();
         }
     }
 
@@ -38,6 +64,13 @@ public class GameManager : UnitySingleton<GameManager>
     {
         currentScore += increase;
         OnScoreChange?.Invoke(currentScore);
+    }
+
+
+    void IncreaseTimer()
+    {
+        timeRemaining += timePerCheckpoint;
+        OnTimerChange?.Invoke(timeRemaining);
     }
 
     void LoadLevel(string levelName)

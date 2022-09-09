@@ -26,9 +26,14 @@ public class PlayerController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
+        GameManager.OnTimerEnd += Kill;
+    }
 
+    void OnDisable()
+    {
+        GameManager.OnTimerEnd -= Kill;
     }
 
     // Update is called once per frame
@@ -44,6 +49,11 @@ public class PlayerController : MonoBehaviour
         body.velocity = Vector3.ClampMagnitude(body.velocity, maxSpeed);
     }
 
+    public void Kill()
+    {
+        Kill(Vector3.zero);
+    }
+
     public void Kill(Vector3 deathImpulse)
     {
         enabled = false;
@@ -52,10 +62,9 @@ public class PlayerController : MonoBehaviour
 
         Collider deadCopyCollider = deadCopy.GetComponent<Collider>();
 
-        deadCopyCollider.enabled = false;
         StartCoroutine(CoroutineHelper.DelayOneFixedFrame(() => deadCopyCollider.enabled = true));
 
-        deadCopy.GetComponent<Rigidbody>().AddForce(deathImpulse, ForceMode.Impulse);
+       // deadCopy.GetComponent<Rigidbody>().AddForce(deathImpulse, ForceMode.Impulse);
 
         meshRenderer.enabled = false;
         body.isKinematic = true;
