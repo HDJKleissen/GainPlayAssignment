@@ -1,24 +1,24 @@
-Total: 19h
-FRIDAY
+Total: 5+0.5+3+2.5+2+6=19h
+FRIDAY: 5h
 22:30 - 23:30 Enviroment setup + Player
 23:30 - 1:00 Obstacle base
 1:00 - 2:30 Obstacle Inspector
 2:30 - 3:30 Troubleshooting selective pushing
-SATURDAY
+SATURDAY: 0.5h
 1:30 - 2:00 physics tweaks
-MONDAY
+MONDAY: 3h
 20:45 - 21:15 more physics tweaks
 21:15 - 21:25 cinemachine setup
 21:25 - 22:15 score setup (pickup, tracking, UI)
 22:15 - 23:00 powerup setup
 23:00 - 23:45 player death 
-WEDNESDAY
+WEDNESDAY: 2.5h
 22:30 - 23:40 pausing
 23:40 - 1:00 player death UI, level creation
-THURSDAY
+THURSDAY: 2h
 20:00 - 20:20 under floor death zone
 20:20 - 22:00 timer and checkpoint
-FRIDAY
+FRIDAY: 6h
 17:00 - 19:00 level segments
 19:00 - 21:00 level generation
 21:00 - 23:00 final fixes
