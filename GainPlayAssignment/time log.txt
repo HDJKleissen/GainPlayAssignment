@@ -1,11 +1,4 @@
-The player needs to reach a goal area or checkpoint before a timer runs out and picks up points along the way. 
-The difficulty should slowly increase during the level.
-If the player finishes the level they need to be prompted to play again. 
-
-Bonus:
-If you complete the exercise early, you can implement a way to add hand crafted chunks of
-obstacles to the game.
-
+Total: 19h
 FRIDAY
 22:30 - 23:30 Enviroment setup + Player
 23:30 - 1:00 Obstacle base
